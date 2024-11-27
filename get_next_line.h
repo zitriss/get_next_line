@@ -3,11 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlize <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: tlize <tlize@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:51:02 by tlize             #+#    #+#             */
-/*   Updated: 2024/11/27 16:51:04 by tlize            ###   ########.fr       */
+/*   Updated: 2024/11/27 17:11:43 by tlize            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef GET_MEXT_LINE_H
+# define GET_MEXT_LINE_H
 
+#include <stdlib.h>
+
+char    *get_next_line(int fd);
+
+#endif
