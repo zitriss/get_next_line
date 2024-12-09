@@ -6,7 +6,7 @@
 /*   By: tlize <tlize@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:50:53 by tlize             #+#    #+#             */
-/*   Updated: 2024/12/09 15:13:52 by tlize            ###   ########.fr       */
+/*   Updated: 2024/12/09 16:27:49 by tlize            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,35 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	str[i + j] = '\0';
 	return (str);
+}
+
+static void	*ft_memset(void *s, int c, size_t n)
+{
+	char	*s_char;
+
+	s_char = (char *)s;
+	while (n > 0)
+	{
+		s_char[n - 1] = c;
+		n--;
+	}
+	return (s);
+}
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	void	*pt;
+
+	if (nmemb > __SIZE_MAX__ / size)
+		return (0);
+	if (nmemb < 1 && size < 1)
+	{
+		nmemb = 1;
+		size = 1;
+	}
+	pt = malloc(nmemb * size);
+	if (!pt)
+		return (pt);
+	ft_memset(pt, '\0', (nmemb * size));
+	return (pt);
 }
