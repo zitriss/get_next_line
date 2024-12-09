@@ -6,11 +6,13 @@
 /*   By: tlize <tlize@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:50:43 by tlize             #+#    #+#             */
-/*   Updated: 2024/12/09 15:21:49 by tlize            ###   ########.fr       */
+/*   Updated: 2024/12/09 15:48:48 by tlize            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
+#include <fcntl.h>
 
 static char	*read_store(int fd, char *memory)
 {
@@ -36,55 +38,55 @@ static char	*read_store(int fd, char *memory)
 	return (memory);
 }
 
-static char	*extract_line(char *storage)
+static char	*extract_line(char *memory)
 {
 	size_t	i;
 	char	*line;
 
 	i = 0;
-	if (!storage || !*storage)
+	if (!memory|| !*memory)
 		return (NULL);
-	while (storage[i] && storage[i] != '\n')
+	while (memory[i] && memory[i] != '\n')
 		i++;
-	line = malloc(i + (storage[i] == '\n') + 1);
+	line = malloc(i + (memory[i] == '\n') + 1);
 	if (!line)
 		return (NULL);
 	i = 0;
-	while (storage[i] && storage[i] == '\n')
+	while (memory[i] && memory[i] == '\n')
 	{
-		line[i] = storage[i];
+		line[i] = memory[i];
 		i ++;
 	}
-	if (storage[i] == '\n')
+	if (memory[i] == '\n')
 		line[i++] = '\n';
 	line[i] = '\0';
 	return (line);
 }
 
-static char	*trim_storage(char *storage)
+static char	*trim_memory(char *memory)
 {
 	size_t	i;
 	size_t	j;
-	char	*new_storage;
+	char	*new_memory;
 
 	i = 0;
 	j = 0;
-	while (storage[i] && storage[i] != '\n')
+	while (memory[i] && memory[i] != '\n')
 		i++;
-	if (!storage[i])
+	if (!memory[i])
 	{
-		free(storage);
+		free(memory);
 		return (NULL);
 	}
-	new_storage = malloc(ft_strlen(storage) - i);
-	if (!new_storage)
+	new_memory = malloc(ft_strlen(memory) - i);
+	if (!new_memory)
 		return (NULL);
 	i++;
-	while (storage[i])
-		new_storage[j++] = storage[i++];
-	new_storage[j] = '\0';
-	free(storage);
-	return (new_storage);
+	while (memory[i])
+		new_memory[j++] = memory[i++];
+	new_memory[j] = '\0';
+	free(memory);
+	return (new_memory);
 }
 
 char	*get_next_line(int fd)
@@ -101,3 +103,22 @@ char	*get_next_line(int fd)
 	memory = trim_storage(memory);
 	return (current_line);
 }
+
+// int	main(int argc, char **argv)
+// {
+// 	int fd;
+// 	char *line;
+
+// 	if (argc != 2)
+// 	{
+// 		return (1);
+// 	}
+// 	fd = open(argv[1], O_RDONLY);
+// 	while ((line = get_next_line(fd)) != NULL)
+// 	{
+// 		printf("%s",line);
+// 		free(line);
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
