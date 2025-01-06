@@ -6,7 +6,7 @@
 /*   By: tlize <tlize@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 16:50:43 by tlize             #+#    #+#             */
-/*   Updated: 2024/12/09 16:24:32 by tlize            ###   ########.fr       */
+/*   Updated: 2025/01/06 09:22:52 by tlize            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,19 @@ static char	*read_memory(int fd, char *memory)
 	char	*buffer;
 	ssize_t	bytes_read;
 
-	bytes_read = 1;
-	buffer = malloc(BUFFER_SIZE + 1);
+	if (!memory)
+		memory = ft_calloc(1, 1);
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
+	bytes_read = 1;
 	while (!ft_strchr(memory, '\n') && bytes_read > 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
 		{
 			free (buffer);
+			free (memory);
 			return (NULL);
 		}
 		buffer[bytes_read] = '\0';
@@ -52,7 +55,7 @@ static char	*get_memory(char *memory)
 	if (!line)
 		return (NULL);
 	i = 0;
-	while (memory[i] && memory[i] == '\n')
+	while (memory[i] && memory[i] != '\n')
 	{
 		line[i] = memory[i];
 		i ++;
@@ -103,12 +106,12 @@ char	*get_next_line(int fd)
 	return (current_line);
 }
 
-int	main(void)
-{
-	int fd;
-	char *line = NULL;
-	fd = open("test.txt", O_RDONLY);
-	while (line == get_next_line(fd))
-		printf("%s",line);
-	return (0);
-}
+// int	main(void)
+// {
+// 	int	fd;
+// 	char *line = NULL;
+// 	fd = open("test.txt", O_RDONLY);
+// 	while (line == get_next_line(fd))
+// 		printf("%s",line);
+// 	return (0);
+// }
